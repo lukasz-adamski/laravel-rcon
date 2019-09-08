@@ -2,6 +2,10 @@
 
 namespace Adams\Rcon;
 
+use \Exception;
+use Adams\Rcon\Exceptions\ConnectionException;
+use Adams\Rcon\Exceptions\RconException;
+
 class Connection implements ConnectionInterface
 {
     /**
@@ -41,11 +45,15 @@ class Connection implements ConnectionInterface
      */
     public function connect()
     {
-        $this->socket = fsockopen($this->host, $this->port, $errno, 
-            $errstr, $this->timeout);
+        try {
+            $this->socket = fsockopen($this->host, $this->port, $errno, 
+                $errstr, $this->timeout);
+        } catch (Exception $e) {
+            throw new ConnectionException($e->getMessage());
+        }
 
         if (! $this->isConnected()) {
-            throw new Exception("Socket error: $errstr ($errno)");
+            throw new ConnectionException("Socket error: $errstr ($errno)");
         }
     }
 
@@ -139,7 +147,7 @@ class Connection implements ConnectionInterface
             return $response->getBody();
         }
 
-        throw new Exception('Received invalid response');
+        throw new RconException('Received invalid response');
     }
 
     /**

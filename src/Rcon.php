@@ -2,6 +2,8 @@
 
 namespace Adams\Rcon;
 
+use Adams\Rcon\Exceptions\RconException;
+
 class Rcon implements ConnectionInterface
 {
     /**
@@ -33,7 +35,7 @@ class Rcon implements ConnectionInterface
         $config = $this->getConnectionConfig($name);
 
         if (is_null($config)) {
-            throw new Exception("Connection $name does not exists in config");
+            throw new RconException("Connection $name does not exists in config");
         }
 
         $connection = new Connection($config['host'], $config['port'], $config['timeout']);

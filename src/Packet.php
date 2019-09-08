@@ -2,6 +2,8 @@
 
 namespace Adams\Rcon;
 
+use Adams\Rcon\Exceptions\RconException;
+
 class Packet
 {
     /**
@@ -69,7 +71,7 @@ class Packet
         foreach ($this->fillable as $field)
         {
             if (! array_key_exists($field, $fields)) {
-                throw new Exception("Invalid packet structure - missing $field field");
+                throw new RconException("Invalid packet structure - missing $field field");
             }
 
             $this->{$field} = $fields[$field];
