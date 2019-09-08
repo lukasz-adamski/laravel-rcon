@@ -1,0 +1,30 @@
+{
+    "name": "lukasz-adamski/laravel-rcon",
+    "description": "Source RCON Protocol Service Provider for Laravel",
+    "keywords": ["laravel", "rcon", "protocol", "framework", "source", "api"],
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "authors": [
+        {
+            "name": "Lukasz Adamski"
+        }
+    ],
+    "require": {
+        "illuminate/support": "~5.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Adams\\Rcon\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Adams\\Rcon\\Test\\": "tests/"
+        }
+    },
+    "require-dev": {
+        "orchestra/testbench": "^3.7",
+        "phpunit/phpunit": "^7.5"
+    }
+}
