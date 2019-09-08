@@ -3,7 +3,7 @@
 namespace Adams\Rcon\Test;
 
 use Adams\Rcon\Packet;
-use Adams\Rcon\Exception;
+use Adams\Rcon\Exceptions\RconException;
 
 class PacketTest extends TestCase
 {
@@ -15,7 +15,7 @@ class PacketTest extends TestCase
      */
     public function testEmptyPacketException()
     {
-        $this->expectException(Exception::class);
+        $this->expectException(RconException::class);
 
         Packet::fromFields([]);
     }
@@ -33,7 +33,7 @@ class PacketTest extends TestCase
             'body' => 'this is simple body'
         ]);
 
-        $this->assertEquals(
+        $this->assertSame(
             $packet->getBytes(),
             "\x1D\x00\x00\x00\x05\x00\x00\x00\x03\x00\x00\x00this is simple body\x00\x00"
         );
@@ -50,9 +50,9 @@ class PacketTest extends TestCase
             "\x1D\x00\x00\x00\x05\x00\x00\x00\x03\x00\x00\x00this is simple body\x00\x00"
         );
 
-        $this->assertEquals($packet->getId(), Packet::ID_AUTHORIZE);
-        $this->assertEquals($packet->getType(), Packet::TYPE_SERVERDATA_AUTH);
-        $this->assertEquals($packet->getBody(), 'this is simple body');
+        $this->assertSame($packet->getId(), Packet::ID_AUTHORIZE);
+        $this->assertSame($packet->getType(), Packet::TYPE_SERVERDATA_AUTH);
+        $this->assertSame($packet->getBody(), 'this is simple body');
     }
 
     /**
@@ -70,7 +70,9 @@ class PacketTest extends TestCase
 
         $decoded = Packet::fromBytes($encoded->getBytes());
 
-        $this->assertEquals($encoded->getBytes(), $decoded->getBytes());
-        $this->assertArraySubset($encoded->getFields(), $decoded->getFields());
+        $this->assertSame($encoded->getBytes(), $decoded->getBytes());
+        $this->assertSame($encoded->getId(), $decoded->getId());
+        $this->assertSame($encoded->getType(), $decoded->getType());
+        $this->assertSame($encoded->getBody(), $decoded->getBody());
     }
 }

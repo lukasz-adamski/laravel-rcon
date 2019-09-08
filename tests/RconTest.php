@@ -3,7 +3,7 @@
 namespace Adams\Rcon\Test;
 
 use Rcon;
-use Adams\Rcon\Connection;
+use Adams\Rcon\Exceptions\ConnectionException;
 
 class RconTest extends TestCase
 {
@@ -25,8 +25,11 @@ class RconTest extends TestCase
      */
     public function testConnectionException()
     {
-        $this->expectException(\ErrorException::class);
+        $this->assertFalse(Rcon::isConnected());
 
-        Rcon::defaultConnection();
+        $this->expectException(ConnectionException::class);
+
+        Rcon::defaultConnection()
+            ->connect();
     }
 }

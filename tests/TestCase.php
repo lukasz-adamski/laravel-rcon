@@ -1,4 +1,5 @@
 <?php
+
 namespace Adams\Rcon\Test;
 
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
